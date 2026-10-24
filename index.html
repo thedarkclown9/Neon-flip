@@ -25,9 +25,7 @@
       position: relative;
       width: 100vw;
       height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      overflow: hidden;
       background: radial-gradient(circle at center, #0f172a 0%, #030712 100%);
     }
     canvas {
@@ -44,7 +42,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      padding: 16px 20px;
+      padding: 14px 18px;
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
@@ -54,17 +52,18 @@
     .hud-left {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
     }
     .score-container {
-      font-size: 32px;
+      font-size: 34px;
       font-weight: 800;
       letter-spacing: 2px;
       color: #00f0ff;
       text-shadow: 0 0 12px rgba(0, 240, 255, 0.6);
+      line-height: 1;
     }
     .best-score {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: #94a3b8;
       letter-spacing: 1px;
@@ -72,7 +71,7 @@
     .warp-badge {
       display: inline-block;
       margin-top: 4px;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       color: #ff007f;
       background: rgba(255, 0, 127, 0.15);
@@ -90,7 +89,7 @@
     }
     .coin-pill {
       background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(255, 215, 0, 0.5);
+      border: 1px solid rgba(255, 215, 0, 0.45);
       padding: 6px 12px;
       border-radius: 20px;
       display: flex;
@@ -104,7 +103,7 @@
     .overlay {
       position: absolute;
       inset: 0;
-      background: rgba(3, 7, 18, 0.85);
+      background: rgba(3, 7, 18, 0.88);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       display: flex;
@@ -112,6 +111,7 @@
       justify-content: center;
       align-items: center;
       z-index: 25;
+      padding: 20px;
     }
     .overlay.hidden {
       display: none !important;
@@ -123,7 +123,7 @@
       padding: 28px 24px;
       text-align: center;
       max-width: 380px;
-      width: 88%;
+      width: 100%;
       box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
     }
     .title-logo {
@@ -144,7 +144,7 @@
     }
     .btn {
       width: 100%;
-      padding: 14px 16px;
+      padding: 13px 16px;
       border: none;
       border-radius: 12px;
       font-size: 15px;
@@ -154,7 +154,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
+      touch-action: manipulation;
     }
     .btn-primary {
       background: linear-gradient(135deg, #00f0ff, #0077fe);
@@ -164,9 +165,10 @@
     .btn-reward {
       background: linear-gradient(135deg, #ff007f, #9900ff);
       color: #fff;
+      box-shadow: 0 0 16px rgba(255, 0, 127, 0.35);
     }
     .btn-hangar {
-      background: rgba(30, 41, 59, 0.9);
+      background: rgba(30, 41, 59, 0.85);
       color: #38bdf8;
       border: 1px solid rgba(56, 189, 248, 0.4);
     }
@@ -180,15 +182,15 @@
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       margin: 16px 0;
-      max-height: 240px;
+      max-height: 280px;
       overflow-y: auto;
       padding: 4px;
     }
     .hangar-card {
       background: #0f172a;
       border: 1px solid #1e293b;
-      border-radius: 10px;
-      padding: 10px 6px;
+      border-radius: 12px;
+      padding: 10px 8px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -200,17 +202,17 @@
     }
     .hangar-card canvas {
       position: static;
-      width: 50px;
-      height: 50px;
+      width: 54px;
+      height: 54px;
     }
     .skin-name {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
     }
     .skin-action {
       font-size: 11px;
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 6px 10px;
+      border-radius: 8px;
       border: none;
       font-weight: bold;
       width: 100%;
@@ -247,8 +249,8 @@
         <div class="title-logo">NEON FLIP</div>
         <div class="subtitle">CYBER DODGER // OVERDRIVE</div>
         <button class="btn btn-primary" id="startBtn">PLAY NOW</button>
-        <button class="btn btn-hangar" id="hangarBtnStart">SKIN STORE</button>
-        <div class="instructions">Tap anywhere on screen to flip gravity</div>
+        <button class="btn btn-hangar" id="hangarBtnStart">CYBER HANGAR (SKINS)</button>
+        <div class="instructions">Tap anywhere to flip gravity</div>
       </div>
     </div>
 
@@ -257,23 +259,24 @@
       <div class="modal-card">
         <div class="title-logo" style="background: linear-gradient(135deg, #ff0055, #ff5500); -webkit-background-clip:text;">WIPEOUT</div>
         <div class="subtitle" id="gameOverStats">SCORE: 0 | ORBS: +0</div>
-        <button class="btn btn-reward" id="reviveBtn">⚡ REVIVE (AD)</button>
-        <button class="btn btn-reward" id="doubleCoinsBtn" style="background: linear-gradient(135deg, #ffd700, #ff8800); color: #000;">💰 2X ORBS (AD)</button>
+        <button class="btn btn-reward" id="reviveBtn">⚡ REVIVE (WATCH AD)</button>
+        <button class="btn btn-reward" id="doubleCoinsBtn" style="background: linear-gradient(135deg, #ffd700, #ff8800); color: #000;">💰 2X ORBS (WATCH AD)</button>
         <button class="btn btn-primary" id="restartBtn">RETRY RUN</button>
-        <button class="btn btn-hangar" id="hangarBtnOver">SKIN STORE</button>
+        <button class="btn btn-hangar" id="hangarBtnOver">CYBER HANGAR (SKINS)</button>
       </div>
     </div>
 
-    <!-- Hangar Overlay -->
+    <!-- Hangar / Skin Store Overlay -->
     <div class="overlay hidden" id="hangarScreen">
-      <div class="modal-card">
-        <div class="title-logo" style="font-size: 24px;">CYBER HANGAR</div>
+      <div class="modal-card" style="max-width: 440px;">
+        <div class="title-logo" style="font-size: 26px;">CYBER HANGAR</div>
+        <div class="subtitle">UPGRADE YOUR SHIP MATRIX</div>
         <div class="hangar-grid" id="hangarGrid"></div>
         <button class="btn btn-secondary" id="closeHangarBtn">CLOSE</button>
       </div>
     </div>
 
-    <!-- Ad Modal -->
+    <!-- Ad Mock Modal -->
     <div class="overlay hidden" id="adModal">
       <div class="modal-card" style="max-width: 280px;">
         <div class="subtitle" style="color: #00f0ff;">SPONSORED REWARD</div>
@@ -285,10 +288,10 @@
   <script>
     const SKINS_CATALOG = [
       { id: 'cyan', name: 'Cyber Cyan', cost: 0, color: '#00f0ff', trail: '#0077fe', shape: 'wedge' },
-      { id: 'flare', name: 'Solar Flare', cost: 50, color: '#ff7700', trail: '#ff0055', shape: 'angular' },
-      { id: 'void', name: 'Void Phantom', cost: 120, color: '#a855f7', trail: '#ec4899', shape: 'stealth' },
-      { id: 'matrix', name: 'Toxic Matrix', cost: 200, color: '#22c55e', trail: '#10b981', shape: 'segmented' },
-      { id: 'chrono', name: 'Chrono Gold', cost: 400, color: '#eab308', trail: '#f97316', shape: 'diamond' }
+      { id: 'flare', name: 'Solar Flare', cost: 40, color: '#ff7700', trail: '#ff0055', shape: 'angular' },
+      { id: 'void', name: 'Void Phantom', cost: 90, color: '#a855f7', trail: '#ec4899', shape: 'stealth' },
+      { id: 'matrix', name: 'Toxic Matrix', cost: 160, color: '#22c55e', trail: '#10b981', shape: 'segmented' },
+      { id: 'chrono', name: 'Chrono Gold', cost: 300, color: '#eab308', trail: '#f97316', shape: 'diamond' }
     ];
 
     let canvas = document.getElementById('gameCanvas');
@@ -309,8 +312,10 @@
 
     const BASE_SPEED = 3.6;
     let currentSpeed = BASE_SPEED;
-    const CEILING_PAD = 40;
-    const FLOOR_PAD = 40;
+    
+    // Increased pads so the top ceiling rail never collides with the HUD
+    let CEILING_PAD = 85;
+    let FLOOR_PAD = 45;
 
     let obstacles = [];
     let coinItems = [];
@@ -320,15 +325,15 @@
 
     let player = {
       x: 80,
-      y: height / 2,
-      radius: 13,
+      y: 200,
+      radius: 12,
       vy: 0,
       gravityDirection: 1,
       gravityStrength: 0.72,
       trail: [],
       reset: function() {
-        this.x = Math.max(70, width * 0.18);
-        this.y = height / 2;
+        this.x = Math.max(65, width * 0.18);
+        this.y = (CEILING_PAD + (height - FLOOR_PAD)) / 2;
         this.vy = 0;
         this.gravityDirection = 1;
         this.trail = [];
@@ -336,7 +341,7 @@
       flip: function() {
         if (!isPlaying || isGameOver) return;
         this.gravityDirection *= -1;
-        this.vy = this.gravityDirection * 4;
+        this.vy = this.gravityDirection * 4.2;
       },
       update: function() {
         this.vy += this.gravityDirection * this.gravityStrength;
@@ -353,265 +358,15 @@
         if (this.trail.length > 10) this.trail.shift();
         for (let pt of this.trail) {
           pt.x -= currentSpeed;
-          pt.alpha *= 0.86;
+          pt.alpha *= 0.85;
         }
       },
       render: function() {
         const skin = SKINS_CATALOG.find(s => s.id === equippedSkinId) || SKINS_CATALOG[0];
+
+        // Trail
         for (let i = 0; i < this.trail.length; i++) {
           const pt = this.trail[i];
           ctx.beginPath();
-          ctx.arc(pt.x, pt.y, this.radius * (i / this.trail.length), 0, Math.PI * 2);
-          ctx.fillStyle = skin.trail;
-          ctx.globalAlpha = pt.alpha * 0.4;
-          ctx.fill();
-        }
-        ctx.globalAlpha = 1.0;
-
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(Math.max(-0.4, Math.min(0.4, this.vy * 0.04)));
-        ctx.strokeStyle = skin.color;
-        ctx.fillStyle = '#030712';
-        ctx.lineWidth = 3;
-
-        ctx.beginPath();
-        ctx.moveTo(16, 0);
-        ctx.lineTo(-12, -11);
-        ctx.lineTo(-6, 0);
-        ctx.lineTo(-12, 11);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-        ctx.restore();
-      }
-    };
-
-    function resizeCanvas() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = width;
-      canvas.height = height;
-      player.reset();
-      initStars();
-    }
-
-    function initStars() {
-      speedStars = [];
-      for (let i = 0; i < 30; i++) {
-        speedStars.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          length: Math.random() * 16 + 4,
-          speedMult: Math.random() * 0.8 + 0.4
-        });
-      }
-    }
-
-    function spawnWave() {
-      const isTop = Math.random() < 0.5;
-      const obsHeight = Math.random() * (height * 0.32) + 60;
-      const obsWidth = Math.random() * 20 + 30;
-
-      obstacles.push({
-        x: width + 30,
-        y: isTop ? CEILING_PAD : height - FLOOR_PAD - obsHeight,
-        width: obsWidth,
-        height: obsHeight,
-        color: isTop ? '#ff0055' : '#ff00aa'
-      });
-
-      if (Math.random() < 0.7) {
-        coinItems.push({
-          x: width + 40 + obsWidth / 2,
-          y: isTop ? CEILING_PAD + obsHeight + 35 : height - FLOOR_PAD - obsHeight - 35,
-          radius: 8
-        });
-      }
-      nextObstacleDistance = 180 + (currentSpeed * 12);
-    }
-
-    function gameLoop() {
-      ctx.clearRect(0, 0, width, height);
-
-      // Stars
-      ctx.strokeStyle = 'rgba(0, 240, 255, 0.2)';
-      ctx.lineWidth = 1;
-      for (let s of speedStars) {
-        if (isPlaying && !isGameOver) {
-          s.x -= currentSpeed * s.speedMult;
-          if (s.x < -30) s.x = width + 30;
-        }
-        ctx.beginPath();
-        ctx.moveTo(s.x, s.y);
-        ctx.lineTo(s.x - s.length, s.y);
-        ctx.stroke();
-      }
-
-      // Rails
-      ctx.fillStyle = '#0f172a';
-      ctx.fillRect(0, 0, width, CEILING_PAD);
-      ctx.fillRect(0, height - FLOOR_PAD, width, FLOOR_PAD);
-
-      ctx.strokeStyle = '#00f0ff';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(0, CEILING_PAD); ctx.lineTo(width, CEILING_PAD);
-      ctx.moveTo(0, height - FLOOR_PAD); ctx.lineTo(width, height - FLOOR_PAD);
-      ctx.stroke();
-
-      if (isPlaying && !isGameOver) {
-        currentSpeed = BASE_SPEED + Math.log(score + 1) * 1.1;
-        document.getElementById('warpBadge').innerText = `VELOCITY ${(currentSpeed / BASE_SPEED).toFixed(1)}x`;
-        player.update();
-
-        nextObstacleDistance -= currentSpeed;
-        if (nextObstacleDistance <= 0) spawnWave();
-
-        for (let i = obstacles.length - 1; i >= 0; i--) {
-          const obs = obstacles[i];
-          obs.x -= currentSpeed;
-
-          if (
-            player.x + player.radius > obs.x &&
-            player.x - player.radius < obs.x + obs.width &&
-            player.y + player.radius > obs.y &&
-            player.y - player.radius < obs.y + obs.height
-          ) {
-            triggerGameOver();
-          }
-
-          if (obs.x + obs.width < 0) {
-            obstacles.splice(i, 1);
-            score++;
-            document.getElementById('currentScore').innerText = score;
-            if (score > highScore) {
-              highScore = score;
-              localStorage.setItem('neon_high_score', highScore);
-              document.getElementById('highScoreText').innerText = `BEST: ${highScore}`;
-            }
-          }
-        }
-
-        for (let i = coinItems.length - 1; i >= 0; i--) {
-          const c = coinItems[i];
-          c.x -= currentSpeed;
-          if (Math.hypot(player.x - c.x, player.y - c.y) < player.radius + c.radius) {
-            runCoins++;
-            coins++;
-            localStorage.setItem('neon_coins', coins);
-            document.getElementById('coinCount').innerText = coins;
-            coinItems.splice(i, 1);
-            continue;
-          }
-          if (c.x + c.radius < 0) coinItems.splice(i, 1);
-        }
-      }
-
-      // Render items
-      for (let obs of obstacles) {
-        ctx.fillStyle = obs.color;
-        ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-      }
-      for (let c of coinItems) {
-        ctx.beginPath();
-        ctx.arc(c.x, c.y, c.radius, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffd700';
-        ctx.fill();
-      }
-
-      player.render();
-      requestAnimationFrame(gameLoop);
-    }
-
-    function triggerGameOver() {
-      isGameOver = true;
-      document.getElementById('gameOverStats').innerText = `SCORE: ${score} | ORBS: +${runCoins}`;
-      document.getElementById('reviveBtn').style.display = canRevive ? 'flex' : 'none';
-      document.getElementById('doubleCoinsBtn').style.display = runCoins > 0 ? 'flex' : 'none';
-      document.getElementById('gameOverScreen').classList.remove('hidden');
-    }
-
-    function startGame() {
-      score = 0;
-      runCoins = 0;
-      canRevive = true;
-      obstacles = [];
-      coinItems = [];
-      currentSpeed = BASE_SPEED;
-      player.reset();
-
-      document.getElementById('currentScore').innerText = '0';
-      document.getElementById('warpBadge').innerText = 'VELOCITY 1.0x';
-      document.getElementById('startScreen').classList.add('hidden');
-      document.getElementById('gameOverScreen').classList.add('hidden');
-      document.getElementById('hangarScreen').classList.add('hidden');
-
-      isGameOver = false;
-      isPlaying = true;
-      nextObstacleDistance = 160;
-    }
-
-    // Direct input listeners for touch
-    window.addEventListener('pointerdown', (e) => {
-      if (e.target.closest('button') || e.target.closest('.modal-card')) return;
-      if (!isPlaying && !isGameOver) {
-        startGame();
-      } else {
-        player.flip();
-      }
-    });
-
-    document.getElementById('startBtn').addEventListener('click', startGame);
-    document.getElementById('restartBtn').addEventListener('click', startGame);
-
-    // Rewarded ads hook
-    function showAd(onSuccess) {
-      const adModal = document.getElementById('adModal');
-      const adTimerText = document.getElementById('adTimerText');
-      adModal.classList.remove('hidden');
-      let count = 2;
-      adTimerText.innerText = `Sponsor ad in progress... ${count}s`;
-      const t = setInterval(() => {
-        count--;
-        if (count > 0) {
-          adTimerText.innerText = `Sponsor ad in progress... ${count}s`;
-        } else {
-          clearInterval(t);
-          adModal.classList.add('hidden');
-          onSuccess();
-        }
-      }, 1000);
-    }
-
-    document.getElementById('reviveBtn').addEventListener('click', () => {
-      showAd(() => {
-        canRevive = false;
-        isGameOver = false;
-        isPlaying = true;
-        player.y = height / 2;
-        player.vy = 0;
-        obstacles = obstacles.filter(o => o.x > player.x + 180);
-        document.getElementById('gameOverScreen').classList.add('hidden');
-      });
-    });
-
-    document.getElementById('doubleCoinsBtn').addEventListener('click', () => {
-      showAd(() => {
-        coins += runCoins;
-        localStorage.setItem('neon_coins', coins);
-        document.getElementById('coinCount').innerText = coins;
-        document.getElementById('doubleCoinsBtn').style.display = 'none';
-        document.getElementById('gameOverStats').innerText = `SCORE: ${score} | ORBS: +${runCoins * 2} (2X!)`;
-      });
-    });
-
-    // Boot immediately
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-    document.getElementById('coinCount').innerText = coins;
-    document.getElementById('highScoreText').innerText = `BEST: ${highScore}`;
-    requestAnimationFrame(gameLoop);
-  </script>
-</body>
-</html>
+          ctx.arc
+          
